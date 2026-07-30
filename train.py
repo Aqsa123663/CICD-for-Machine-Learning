@@ -50,7 +50,8 @@ print("Accuracy:", str(round(accuracy, 2) * 100) + "%", "F1:", round(f1, 2))
 
 
 with open("Results/metrics.txt", "w") as outfile:
-    outfile.write(f"\nAccuracy = {round(accuracy, 2)}, F1 Score = {round(f1, 2)}.")
+    outfile.write(f"\nAccuracy: {str(round(accuracy, 2) * 100)}% \nF1: {round(f1, 2)}")
+
 
 cm = confusion_matrix(y_test, predictions, labels=pipe.classes_)
 disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=pipe.classes_)
@@ -58,6 +59,8 @@ disp.plot()
 plt.savefig("Results/model_results.png", dpi=120)
 
 
-# sio.dump(pipe, "Model/drug_pipeline.skops")
+sio.dump(pipe, "Model/drug_pipeline.skops")
 
-sio.load("Model/drug_pipeline.skops", trusted=True)
+model_path = "Model/drug_pipeline.skops"
+untrusted_types = sio.get_untrusted_types(file=model_path)
+loaded_pipe = sio.load(model_path, trusted=untrusted_types)
