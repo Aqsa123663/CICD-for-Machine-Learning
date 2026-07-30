@@ -58,6 +58,6 @@ disp.plot()
 plt.savefig("Results/model_results.png", dpi=120)
 
 
-sio.dump(pipe, "Model/drug_pipeline.skops")
+# sio.dump(pipe, "Model/drug_pipeline.skops")
 
 sio.load("Model/drug_pipeline.skops", trusted=True)
